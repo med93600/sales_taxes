@@ -1,0 +1,40 @@
+
+with "../../../gpr_options/gpr_options.gpr";
+with "aunit-extras";
+with "../kata";
+
+project Kata.Harness is
+
+   for Source_Dirs use ("sources");
+   for Object_Dir use "objects";
+   for Exec_Dir use "binaries";
+   for Main use
+     (
+     "kata_harness-main.adb"
+     --  pragma Aor (Label, Harness_Main);
+);
+   -------------
+   -- Builder --
+   -------------
+
+   package Builder  renames gpr_options.Builder;
+
+   ------------
+   -- Binder --
+   ------------
+
+   package Binder  renames gpr_options.Binder;
+
+   ------------
+   -- Linker --
+   ------------
+
+   package Linker  renames gpr_options.Linker;
+
+   --------------
+   -- Compiler --
+   --------------
+
+   package Compiler renames gpr_options.Compiler;
+
+end Kata.Harness;

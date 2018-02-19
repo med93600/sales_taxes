@@ -1,0 +1,62 @@
+
+with "aunit-extras";
+with "../kata";
+
+project Kata.Harness is
+
+Warning_Switches := ("-gnatw.cdf.h.ijkm.o.pr.rtu.x","-gnatwG");
+   Style_Switches   := ("-gnatyacefhikprStx");
+   Ada_Switche      := ("-gnat12",
+                        "-g",
+                        "-fstack-check",
+                        "-gnato",
+                        "-gnata"
+                       -- "-fPIC"
+                       );
+
+   Default_Ada_Switches := Warning_Switches
+     & Style_Switches
+     & Ada_Switche;
+
+   for Source_Dirs use ("sources");
+   for Object_Dir use "objects";
+   for Exec_Dir use "binaries";
+   for Main use
+     (
+     "kata_harness-main.adb"
+);
+   -------------
+   -- Builder --
+   -------------
+
+   package Builder is
+      for Default_Switches ("Ada") use ("-j0") & AUnit.Extras.Builder'Default_Switches("Ada");
+   end Builder;
+
+
+   ------------
+   -- Binder --
+   ------------
+
+   package Binder is
+      for Default_Switches ("ada") use ("-E","-static");
+   end Binder;
+
+   ------------
+   -- Linker --
+   ------------
+
+   package Linker is
+      for Default_Switches ("ada") use ("-g");
+   end Linker;
+
+
+   --------------
+   -- Compiler --
+   --------------
+
+   package Compiler is
+      for Switches ("ada") use Default_Ada_Switches;
+   end Compiler;
+
+end Kata.Harness;

@@ -1,0 +1,43 @@
+project Kata is
+
+   Warning_Switches := ("-gnatw.cdf.h.ijkm.o.pr.rtu.x","-gnatwG");
+   Style_Switches   := ("-gnatyacefhikprStx");
+   Ada_Switche      := ("-gnat12",
+                        "-g",
+                        "-fstack-check",
+                        "-gnato",
+                        "-gnata"
+                       -- "-fPIC"
+                       );
+
+   Default_Ada_Switches := Warning_Switches
+     & Style_Switches
+     & Ada_Switche;
+
+   for Source_Dirs use ("sources/**");
+
+   package Ide is
+      for Vcs_Kind use "Git";
+   end Ide;
+
+   for Object_Dir use "objects";
+   for Library_Dir use "libraries";
+   for Library_Name use "kata";
+
+   for Library_Version use "kata.so.1";
+--     for Library_Kind := external ("LIBRARY_TYPE", "static");
+--     for Library_Interface use ("Street_Lighting",
+--                                "Street_Lighting.Services",
+--                                "Street_Lighting.Types",
+--                                "Street_Lighting.Types.State_Report");
+
+   package Builder is
+      for Switches ("ada") use ("-j0");
+   end Builder;
+
+   package Compiler is
+      for Switches ("ada") use Default_Ada_Switches;
+   end Compiler;
+
+end Kata;
+

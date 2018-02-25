@@ -4,6 +4,3 @@
 # Ada Library Information
 *.ali
 
-objects/
-libraries/
-binaries/

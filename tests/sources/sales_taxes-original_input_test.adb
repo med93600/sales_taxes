@@ -25,7 +25,9 @@ package body Sales_Taxes.Original_Input_Test is
    --------------------
    procedure Register_Tests (Test : in out T_Test)
    is
+      pragma Unreferenced (Test);
       package Handler is new AUnit.Test_Cases.Specific_Test_Case_Registration (T_Test);
+      pragma Unreferenced (Handler);
    begin
 
 --        Handler.Register_Wrapper 

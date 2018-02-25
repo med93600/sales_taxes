@@ -1,26 +1,16 @@
 with Types; use Types;
-with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 package body Sales_Taxes.Test is
+   
+   -------------------
+   --
 
-   ------------
-   -- Set_Up --
-   ------------
+   procedure Assert (Test      : in out T_Test'Class;
+                     Effective : in     String;
+                     Expected  : in     String);
 
-   overriding procedure Set_Up (Test : in out T_Test)
-   is
-      pragma Unreferenced (Test);
-   begin
-      null;
-   end Set_Up;
-   --------------------
-   -- Tear_Down_Case --
-   --------------------
-   overriding procedure Tear_Down_Case (Test : in out T_Test)
-   is
-      pragma Unreferenced (Test);
-   begin
-      null;
-   end Tear_Down_Case;
+   --
+   ---------------------
+   
 
    --------------------
    --  Register_Tests --
@@ -48,14 +38,31 @@ package body Sales_Taxes.Test is
       Cart : T_Cart;
    begin
       
-      Cart.Add (T_Item'(Name => To_Unbounded_String ("book"),
+      Cart.Add (Create (Name => "book",
                         Price => 10.0));
-      Test.Assert (Actual   => Cart.Output,
-                   Expected => "1 book at 10.00" & CRLF
+      
+      Test.Assert (Effective => Cart.Output,
+                   Expected  => "1 book at 10.00" & CRLF
                    & "Sales Taxes: 0.00" & CRLF 
-                   & "Total: 10.00",
-                   Message => "");
+                   & "Total: 10.00"); 
+      
    end One_Item;
    pragma Aor (Label, Harness_Routine_Implementation);
+   
+    ------------
+   --  Assert --
+    ------------
+    
+   procedure Assert (Test      : in out T_Test'Class;
+                     Effective : in     String;
+                     Expected  : in     String)
+   is
+   begin
+      Test.Assert (Actual   => Effective,
+                   Expected => Expected,
+                   Message  => ""); 
+      
+   end Assert;
+     
 
 end Sales_Taxes.Test;
